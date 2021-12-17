@@ -1,0 +1,18 @@
+{
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mongoose": "^6.1.2"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "name": "ksdtapi",
+  "version": "1.0.0",
+  "description": "API for the KSDT Radio's Practice Room application.",
+  "main": "server.js",
+  "devDependencies": {},
+  "author": "Waynar Bocangel Calderon",
+  "license": "ISC"
+}
