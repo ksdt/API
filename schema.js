@@ -4,18 +4,20 @@
 
 /**
  * @typedef {Object} User - A registered user of KSDT Radio
- * @property {String} userID - A unique identifier for each user
- * @property {String} firstname - The user's firstname
- * @property {String} lastname - The user's lastname
- * @property {String} email - The user's email
- * @property {String} password - The user's hashed password
+ * @property {String} userID - A unique identifier for each user (IMMUTABLE, REQUIRED, SERVER GENERATED)
+ * @property {String} firstname - The user's firstname (REQUIRED)
+ * @property {String} lastname - The user's lastname (REQUIRED)
+ * @property {String} email - The user's email (REQUIRED)
+ * @property {String} password - The user's hashed password (REQUIRED)
  * @property {String} studentID - The user's hashed student ID (OPTIONAL)
- * @property {String} badge - The user's current badge level
- * @property {Array.<String>} bookings - The user's booking history
- * @property {Array.<String>} sessions - The user's studio session history
- * @property {Array.<String>} requests - The user's current studio session requests
- * @property {Array.<String>} workshops - The user's registered workshops
- * @property {Array.<String>} qualifications - The user's qualifications
+ * @property {String} badge - The user's current badge level (REQUIRED, SERVER GENERATED)
+ * @property {Array.<String>} bookings - The user's booking history (REQUIRED, EMPTY BY DEFAULT)
+ * @property {Array.<String>} sessions - The user's studio session history (REQUIRED, EMPTY BY DEFAULT)
+ * @property {Array.<String>} requests - The user's current studio session requests (REQUIRED, EMPTY BY DEFAULT)
+ * @property {Array.<String>} workshops - The user's registered workshops (REQUIRED, EMPTY BY DEFAULT)
+ * @property {Array.<String>} qualifications - The user's qualifications (REQUIRED, EMPTY BY DEFAULT)
+ * @property {Array.<String>} keys - The user's API keys (REQUIRED, EMPTY BY DEFAULT, MANAGED BY ADMINISTRATOR ONLY)
+ * @description 
  */
 
 /**
@@ -73,6 +75,12 @@
  * @property {Array.<String>} managers - List of users that can manage the qualification
  */
 
+/**
+ * @typedef {Object} Key - An API Key
+ * @property {String} key - The hashed key value
+ * @property {String} userID - The unique identifier of the user owning the key
+ */
+
 // Mongoose is an npm package that facilitates tansactions with an underlying MongoDB instance
 const mongoose = require("mongoose");
 
@@ -91,7 +99,8 @@ let users = new mongoose.Schema({
     sessions: [String],
     requests: [String],
     workshops: [String],
-    qualifications: [String]
+    qualifications: [String],
+    keys: [String]
 });
 
 let bookings = new mongoose.Schema({
@@ -139,11 +148,17 @@ let qualifications = new mongoose.Schema({
     managers: [String]
 });
 
+let keys = new mongoose.Schema({
+    key: String,
+    userID: String
+});
+
 module.exports = {
     mongoose: mongoose,
     User: new mongoose.model("User", users),
     Booking: new mongoose.model("Booking", bookings),
     Session: new mongoose.model("Session", sessions),
     Workshop: new mongoose.model("Workshop", workshops),
-    Qualification: new mongoose.model("Qualification", qualifications)
+    Qualification: new mongoose.model("Qualification", qualifications),
+    Key: new mongoose.model("Key", keys)
 };
