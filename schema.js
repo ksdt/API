@@ -1,8 +1,4 @@
 /**
- * @module schema
- */
-
-/**
  * @typedef {Object} User - A registered user of KSDT Radio
  * @property {String} userID - A unique identifier for each user (IMMUTABLE, REQUIRED, SERVER GENERATED)
  * @property {String} firstname - The user's firstname (REQUIRED)
@@ -153,8 +149,13 @@ let keys = new mongoose.Schema({
     userID: String
 });
 
+/**
+ * @module schema
+ */
 module.exports = {
+    /** Mongoose instance */
     mongoose: mongoose,
+    /** User mongoose model */
     User: new mongoose.model("User", users),
     Booking: new mongoose.model("Booking", bookings),
     Session: new mongoose.model("Session", sessions),

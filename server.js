@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
-const mongo = require(__dirname + "/server.js");
+const schema = require(__dirname + "/schema.js");
+const security = require(__dirname + "/security.js");
 const app = express();
 
 app.listen(process.env.PORT, () => {
@@ -8,9 +9,9 @@ app.listen(process.env.PORT, () => {
 });
 
 app.get("/", (req, res) => {
-    res.send("Hello World");
+    res.send("Welcome to the KSDT API");
 });
 
-app.get("/tests", (req, res) => {
+app.get("/users/:userID", (req, res) => {
     res.send("Testing!");
 });
