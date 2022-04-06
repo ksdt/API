@@ -21,7 +21,7 @@ let server = app.listen(process.env.PORT, () => {
 	if (process.argv[2] === "build") {
 		setTimeout(() => {
 			closeServer(server);
-		}, 10000);
+		}, 3000);
 	}
 });
 
