@@ -81,7 +81,7 @@
 const mongoose = require("mongoose");
 
 // This connects the application to the MongoDB Instance
-mongoose.connect(process.env.DB, {useUnifiedTopology: true, useNewUrlParser: true});
+mongoose.connect(process.env.DB || process.argv[3], {useUnifiedTopology: true, useNewUrlParser: true});
 
 let users = new mongoose.Schema({
 	userID: String,
