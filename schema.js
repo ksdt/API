@@ -13,7 +13,7 @@
  * @property {Array.<String>} workshops - The user's registered workshops (REQUIRED, EMPTY BY DEFAULT)
  * @property {Array.<String>} qualifications - The user's qualifications (REQUIRED, EMPTY BY DEFAULT)
  * @property {Array.<String>} keys - The user's API keys (REQUIRED, EMPTY BY DEFAULT, MANAGED BY ADMINISTRATOR ONLY)
- * @description 
+ * @description
  */
 
 /**
@@ -84,82 +84,88 @@ const mongoose = require("mongoose");
 mongoose.connect(process.env.DB, {useUnifiedTopology: true, useNewUrlParser: true});
 
 let users = new mongoose.Schema({
-    userID: String,
-    firstname: String,
-    lastname: String,
-    email: String,
-    password: String,
-    studentID: String,
-    badge: String,
-    bookings: [String],
-    sessions: [String],
-    requests: [String],
-    workshops: [String],
-    qualifications: [String],
-    keys: [String]
+	userID: String,
+	firstname: String,
+	lastname: String,
+	email: String,
+	password: String,
+	studentID: String,
+	badge: String,
+	bookings: [String],
+	sessions: [String],
+	requests: [String],
+	workshops: [String],
+	qualifications: [String],
+	keys: [String]
 });
 
 let bookings = new mongoose.Schema({
-    bookingID: String,
-    date: Date,
-    slot: Number,
-    recurring: Number,
-    userID: String,
-    waitlist: [String],
-    history: [{
-        userID: String,
-        description: String,
-        date: Date
-    }]
+	bookingID: String,
+	date: Date,
+	slot: Number,
+	recurring: Number,
+	userID: String,
+	waitlist: [String],
+	history: [
+		{
+			userID: String,
+			description: String,
+			date: Date
+		}
+	]
 });
 
 let sessions = new mongoose.Schema({
-    title: String,
-    userID: String,
-    managers: [String],
-    schedule: Date,
-    attachments: [String],
-    history: [{
-        userID: String,
-        status: String,
-        description: String,
-        date: Date
-    }]
+	title: String,
+	userID: String,
+	managers: [String],
+	schedule: Date,
+	attachments: [String],
+	history: [
+		{
+			userID: String,
+			status: String,
+			description: String,
+			date: Date
+		}
+	]
 });
 
 let workshops = new mongoose.Schema({
-    title: String,
-    qualifications: [String],
-    date: Date,
-    managers: [String],
-    registered: [String],
-    attendants: [String],
-    attachments: [String]
+	title: String,
+	qualifications: [String],
+	date: Date,
+	managers: [String],
+	registered: [String],
+	attendants: [String],
+	attachments: [String]
 });
 
 let qualifications = new mongoose.Schema({
-    title: String,
-    qualificationID: String,
-    qualified: [String],
-    managers: [String]
+	title: String,
+	qualificationID: String,
+	qualified: [String],
+	managers: [String]
 });
 
 let keys = new mongoose.Schema({
-    key: String,
-    userID: String
+	key: String,
+	userID: String
 });
 
 /**
  * @module schema
  */
 module.exports = {
-    /** Mongoose instance */
-    mongoose: mongoose,
-    /** User mongoose model */
-    User: new mongoose.model("User", users),
-    Booking: new mongoose.model("Booking", bookings),
-    Session: new mongoose.model("Session", sessions),
-    Workshop: new mongoose.model("Workshop", workshops),
-    Qualification: new mongoose.model("Qualification", qualifications),
-    Key: new mongoose.model("Key", keys)
+
+	/** Mongoose instance */
+	mongoose: mongoose,
+
+	/** User mongoose model */
+	User: new mongoose.model("User", users),
+	Booking: new mongoose.model("Booking", bookings),
+	Session: new mongoose.model("Session", sessions),
+	Workshop: new mongoose.model("Workshop", workshops),
+	Qualification: new mongoose.model("Qualification", qualifications),
+	Key: new mongoose.model("Key", keys)
 };

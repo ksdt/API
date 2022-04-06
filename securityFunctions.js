@@ -1,5 +1,5 @@
 /**
- * securityFunctions Functions
+ * SecurityFunctions Functions
  * @namespace securityFunctions
  */
 require("dotenv").config();
@@ -13,7 +13,7 @@ const schema = require(__dirname + "/schema.js");
  * @return Returns the hashed password.
  */
 function hashPass (password) {
-    return securityFunctions.HmacSHA256(password, process.env.HASHKEY).toString();
+	return securityFunctions.HmacSHA256(password, process.env.HASHKEY).toString();
 }
 
 /**
@@ -24,7 +24,7 @@ function hashPass (password) {
  * @return The encrypted message.
  */
 function encrypt (message, password) {
-    return securityFunctions.AES.encrypt(message, password).toString();
+	return securityFunctions.AES.encrypt(message, password).toString();
 }
 
 /**
@@ -34,8 +34,8 @@ function encrypt (message, password) {
  * @param {String} password The password to use as key.
  * @return Returns the decrypted data.
  */
-function decrypt (data, password){
-    return securityFunctions.AES.decrypt(data, password).toString(securityFunctions.enc.Utf8);
+function decrypt (data, password) {
+	return securityFunctions.AES.decrypt(data, password).toString(securityFunctions.enc.Utf8);
 }
 
 /**
@@ -45,21 +45,21 @@ function decrypt (data, password){
  * @callback (response,error) Sends either true or false based on whether the email and password were authenticated or not, as well as an appropriate error message.
  */
 function authenticate (userData, callback) {
-    schema.User.findOne({email: userData.email}, (error, user) => {
-        if (error || user === null) {
-            callback(false, "USER NOT FOUND");
-        } else {
-            callback(hashPass(userData.password) === user.password, "WRONG PASSWORD");
-        }
-    })
+	schema.User.findOne({email: userData.email}, (error, user) => {
+		if (error || user === null) {
+			callback(false, "USER NOT FOUND");
+		} else {
+			callback(hashPass(userData.password) === user.password, "WRONG PASSWORD");
+		}
+	});
 }
 
 /**
  * @module securityFunctions
  */
 module.exports = {
-    hashPass: hashPass,
-    encrypt: encrypt,
-    decrypt: decrypt,
-    authenticate: authenticate
-}
+	hashPass: hashPass,
+	encrypt: encrypt,
+	decrypt: decrypt,
+	authenticate: authenticate
+};

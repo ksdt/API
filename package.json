@@ -7,12 +7,16 @@
   },
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "lint": "./node_modules/.bin/eslint --fix ./*.js"
   },
   "name": "ksdtapi",
   "version": "1.0.0",
   "description": "API for the KSDT Radio's Practice Room application.",
   "main": "server.js",
   "author": "Waynar Bocangel Calderon",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^8.12.0"
+  }
 }
