@@ -3,6 +3,7 @@ const express = require("express");
 const schema = require(__dirname + "/schema.js");
 const security = require(__dirname + "/securityFunctions.js");
 const app = express();
+const mongoose = require('mongoose');
 
 function closeServer (serverToClose) {
 	serverToClose.close(() => {
@@ -16,8 +17,8 @@ function closeServer (serverToClose) {
 
 let server = app.listen(process.env.PORT, () => {
 	console.log("Started listening at port " + process.env.PORT);
-	console.log(schema);
-	console.log(security);
+	//console.log(schema.User);
+	//console.log(security);
 	if (process.argv[2] === "build") {
 		setTimeout(() => {
 			closeServer(server);
@@ -29,8 +30,30 @@ app.get("/", (req, res) => {
 	res.send("Welcome to the KSDT API");
 });
 
-app.get("/users/:userID", (req, res) => {
-	res.send("Testing!");
+/* This endpoint is a directory for all registerd KSDT users */
+app.get("/users/", (req, res) => {
+	User.find({}, function(err, users) {
+		if (err) {
+			console.log("Error!");
+		} else {
+			//We send the user query to view "users"
+			res.render("users", {users: user});
+
+			console.log(users);
+		}
+	})
+	res.send("This is the User Directory Page");
 });
+
+app.get("/users/:userID", (req, res) => {
+	User.findById(req.params.id, function(err, user) {
+		if (err) {
+			res.redirect("/users/");
+	} else {
+		res.redirect("/users/" + req.params.id);
+	}});
+});
+
+
 
 
